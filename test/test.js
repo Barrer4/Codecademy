@@ -1,7 +1,5 @@
 'use strict';
 
-const fs = require('fs');
-
 process.stdin.resume();
 process.stdin.setEncoding('utf-8');
 
@@ -23,44 +21,47 @@ function readLine() {
 }
 
 /*
- * Complete the 'diagonalDifference' function below.
+ * Complete the 'plusMinus' function below.
  *
- * The function is expected to return an INTEGER.
- * The function accepts 2D_INTEGER_ARRAY arr as parameter.
+ * The function accepts INTEGER_ARRAY arr as parameter.
  */
 
-function diagonalDifference(arr) {
+function plusMinus(arr) {
   // Write your code here
 
-  let right;
-  let left;
-
-  for (let i = 0; i < arr.length; i++) {
-    right += 
+  let positive = 0;
+  let negative = 0;
+  let zero = 0;
+  for (let i in arr) {
+    if (arr[i] > 0) {
+      positive++;
+    } else if (arr[i] < 0) {
+      negative++;
+    } else {
+      zero++;
+    }
   }
 
-  return Math.abs(left - right);
+  let newArr = [(positive / arr.length).toFixed(6),
+    (negative / arr.length).toFixed(6),
+    (zero / arr.length).toFixed(6)];
+
+    for(let i in newArr){
+      console.log(newArr[i])
+    }
 }
 
 function main() {
-  const ws = fs.createWriteStream(process.env.OUTPUT_PATH);
-
   const n = parseInt(readLine().trim(), 10);
 
-  let arr = Array(n);
+  const arr = readLine()
+    .replace(/\s+$/g, '')
+    .split(' ')
+    .map((arrTemp) => parseInt(arrTemp, 10));
 
-  for (let i = 0; i < n; i++) {
-    arr[i] = readLine()
-      .replace(/\s+$/g, '')
-      .split(' ')
-      .map((arrTemp) => parseInt(arrTemp, 10));
-  }
-
-  const result = diagonalDifference(arr);
-
-  ws.write(result + '\n');
-
-  ws.end();
+  plusMinus(arr);
 }
 
-diagonalDifference(3, 11, 2, 4, 4, 5, 6, 10, 8, -12);
+let arr = [-4, 3, -9, 0, 4, 1];
+plusMinus(arr);
+
